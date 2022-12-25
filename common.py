@@ -121,6 +121,9 @@ def getVerbGNP(tam, depend_data, processed_nouns, processed_pronouns):
 
     casedata = getDataByIndex(searchIndex, searchList)
 
+    # verb agreement with CP
+    # if
+
     if (casedata == False):
         log('Something went wrong. Cannot determine GNP for verb.', 'ERROR')
         sys.exit()
@@ -426,7 +429,7 @@ def process_nouns(nouns):
 def process_adjectives(adjectives, processed_nouns):
     '''Process adjectives as (index, word, category, case, gender, number)'''
     processed_adjectives = []
-
+    gender = ''
     for adjective in adjectives:
         relnoun = int(adjective[4].strip().split(':')[0])
         relnoun_data = getDataByIndex(relnoun, processed_nouns)
@@ -470,10 +473,10 @@ def process_verbs(verbs, depend_data, processed_nouns, processed_pronouns, proce
                 #CP_noun = [verb[0] - 0.1, cp_word, 'n', 'd', tags['gen'], tags['num'], 'a', 'CP_noun']
                 #processed_nouns.append((verb[0] - 0.1, cp_word, 'n', 'd', tags['gen'], tags['num'], 'a', 'CP_noun'))
                 processed_nouns.append((verb[0] - 0.1, cp_word, 'n', 'd','m', 's', 'a', 'CP_noun'))
-                #gender = tags['gen']
-                #number = tags['num']
-                #person = 'a'
-                verb = setGNP(CP_noun, verb)
+                gender = 'm'
+                number = 's'
+                person = 'a'
+
                 is_GNP_identified = True  # CP_Noun verb agreement
                 log(f'{cp_word} from CP, processed as noun with {verb[4]}, {verb[5]}, {verb[6]} after agreement')  # default male, can get modified during reprocessing
                 # processed_others.append( (verb[0]- 0.1,clean(cp_word),'other') )
